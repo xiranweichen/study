@@ -10,7 +10,6 @@ public class BlockTest {
         String desc = Person.desc;
         Person person = new Person();
     }
-    //test push with company computer
 }
 class Person{
     String name;
