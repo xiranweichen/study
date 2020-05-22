@@ -1,24 +1,38 @@
 package reflection;
 
-public class Person extends Creature<String> {
+/**
+ * @description:
+ * @date: 2020/5/12 18:40
+ * @author: lizhenhong
+ */
+public class Person1 extends Creature<String> {
 
     private String name;
-    public int age;
+    int age;
+    public int id;
 
-    public Person() {
+    public Person1() {
     }
 
-    public Person(String name, int age) {
+    Person1(String name, int age) {
         this.name = name;
         this.age = age;
     }
 
-    private Person(String name) {
+    private Person1(String name) {
         this.name = name;
     }
 
-    public void show() {
+    private void show() {
         System.out.println("this is a person class");
+    }
+
+    public void info() {
+        System.out.println(" I'm a person");
+    }
+
+    public String display(String interests) {
+        return interests;
     }
 
     private String showNation(String nation) {
@@ -50,3 +64,4 @@ public class Person extends Creature<String> {
                 '}';
     }
 }
+

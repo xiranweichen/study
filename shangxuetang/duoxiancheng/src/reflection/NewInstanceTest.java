@@ -2,6 +2,8 @@ package reflection;
 
 import org.junit.Test;
 
+import java.util.Random;
+
 /**
  * @author lizhenhong
  * @Description: 通过反射创建对应的运行时类的对象
@@ -24,5 +26,45 @@ public class NewInstanceTest {
         Person person = personClass.newInstance();
         System.out.println(person);  //Person{name='null', age=0}
     }
+
+    /**
+     * 反射的动态性
+     */
+    @Test
+    public void testDongtai() {
+        for (int i = 0; i < 100; i++) {
+            int num = new Random().nextInt(3);  //0, 1, 2
+            String classPath = "";
+            switch (num) {
+                case 0:
+                    classPath = "java.util.Date";
+                    break;
+                case 1:
+                    classPath = "java.lang.Object";
+                    break;
+                case 2:
+                    classPath = "reflection.Person";
+                    break;
+            }
+            try {
+                Object instance = getInstance(classPath);
+                //每次都是随机输出的，输出的内容不同
+                System.out.println(instance);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 创建一个指定类的对象
+     * @param classPath :指的是类的完全限定名
+     */
+    public Object getInstance(String classPath) throws Exception {
+        Class name = Class.forName(classPath);
+        Object newInstance = name.newInstance();
+        return newInstance;
+    }
+
 
 }
