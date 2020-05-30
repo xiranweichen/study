@@ -19,10 +19,17 @@ class Bank{
     }
 
     //2. 内部创建类的静态对象
-    private static Bank instance = new Bank();
+    private volatile static Bank instance = new Bank();
 
     //3. 提供工共的static方法返回类的对象
     public static Bank getInstance() {
+        if (instance == null) {
+            synchronized (Bank.class) {
+                if (instance == null) {
+                    instance = new Bank();
+                }
+            }
+        }
         return instance;
     }
 }
