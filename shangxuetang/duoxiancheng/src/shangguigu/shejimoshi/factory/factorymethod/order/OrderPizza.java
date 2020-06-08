@@ -1,6 +1,6 @@
 package shangguigu.shejimoshi.factory.factorymethod.order;
 
-import shangguigu.shejimoshi.factory.factorymethod.Pizza;
+import shangguigu.shejimoshi.factory.factorymethod.pizza.Pizza;
 
 import java.io.BufferedReader;
 import java.io.IOException;
