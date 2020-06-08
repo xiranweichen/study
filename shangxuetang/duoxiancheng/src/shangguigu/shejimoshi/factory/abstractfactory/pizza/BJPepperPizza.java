@@ -1,4 +1,4 @@
-package shangguigu.shejimoshi.factory.factorymethod;
+package shangguigu.shejimoshi.factory.abstractfactory.pizza;
 
 /**
  * @description:
