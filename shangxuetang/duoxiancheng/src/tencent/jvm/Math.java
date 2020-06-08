@@ -1,6 +1,6 @@
 package tencent.jvm;
 
-import shangguigu.reflection.huodejiegou.Person;
+import shangguigu.basic.reflection.huodejiegou.Person;
 
 import java.util.ArrayList;
 import java.util.List;
