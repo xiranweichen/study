@@ -16,9 +16,9 @@ public class ZidingyiThreadPool {
 
     @Test
     public void test() {
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(1,  //核心线程数：1，只能同时运行一个线程
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(1,             //核心线程数：比如设置成1，表示只能同时运行一个线程
                                                         2,             //最大线程数：2，最多只能创建两个线程
-                                                           60L,              //存活时间，线程空闲超时时间，
+                                                           60L,            //存活时间，线程空闲超时时间，
                                                                          TimeUnit.MILLISECONDS,          //空闲时间单位
                                                                          new LinkedBlockingQueue<Runnable>(3));//队列的类型 && 容量
         /**
