@@ -16,6 +16,7 @@ public class CallableThreadPool {
      *  A、B两个线程，如果A需要B的结果，A不需要等到B执行完成后才能拿到结果，
      *  使用Futhre模式可以拿到一个未来的Futrure，等B有了结果再取真是的结果，类似于Ajax，做异步加载
      */
+//    看到day008，第五节
     @Test
     public void test() throws ExecutionException, InterruptedException {
         ExecutorService service = Executors.newCachedThreadPool();
@@ -25,6 +26,20 @@ public class CallableThreadPool {
         String s = result.get();
         Thread.sleep(2000);
         System.out.println("2. Callable返回的结果：" + s);
+//        new ThreadPoolExecutor(1,
+//                2, 
+//                3, 
+//                TimeUnit.MILLISECONDS,
+//                new LinkedBlockingQueue<>(3),
+//                new ThreadFactory() {
+//                    @Override
+//                    public Thread newThread(Runnable r) {
+//                        return null;
+//                    }
+//                },
+//                new ThreadPoolExecutor.AbortPolicy()
+//        );
+        new LinkedBlockingQueue<>(3);
     }
     
 }
