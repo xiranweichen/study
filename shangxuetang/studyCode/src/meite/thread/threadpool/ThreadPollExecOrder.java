@@ -2,128 +2,137 @@ package meite.thread.threadpool;
 
 import org.junit.Test;
 import shangguigu.basic.duotai.Person;
-import shangguigu.basic.reflection.exer.Student1;
-import shangguigu.basic.reflection.exer.Student2;
-import shangguigu.basic.reflection.exer.Student3;
-import sun.nio.ch.ThreadPool;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 
 /**
  * @description: 测试一下自定义线程池中核心线程、最大线程、阻塞队列中的线程的执行顺序
+ *               经过多次测试：线程池的执行顺序为：核心线程数种的线程-->借来的线程-->阻塞队列种的线程
  * @date: 2020/7/1 13:44
  * @author: lizhenhong
  */
 public class ThreadPollExecOrder {
 
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
 
         ThreadPoolExecutor executor = creatExecutor();
-        executor.execute(new PersonList());
-        executor.execute(new StudentList());
-        executor.execute(new stuList());
-        executor.execute(new Student());
-//        executor.shutdown();
+        List<Future<List<Person>>> futures = executor.invokeAll(getThreadList());
+        executor.shutdown();
     }
 
+    private List<Callable<List<Person>>> getThreadList() {
+        List<Callable<List<Person>>> threadList = new ArrayList<>();
+        Callable<List<Person>> thread1 = new Person1();
+        Callable<List<Person>> thread2 = new Person2();
+        Callable<List<Person>> thread3 = new Person3();
+        Callable<List<Person>> thread4 = new Person4();
+        Callable<List<Person>> thread5 = new Person5();
+        Callable<List<Person>> thread6 = new Person6();
+        threadList.addAll(Arrays.asList(thread1, thread2, thread3, thread4, thread5, thread6));
+        return threadList;
+    }
+
+    /**
+     * 创建线程池
+     * @return: ThreadPoolExecutor
+     */
     private ThreadPoolExecutor creatExecutor() {
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(1,
-                4,
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(3,
+                6,
                 0L,
                 TimeUnit.MILLISECONDS,
-                new LinkedBlockingDeque<>(1),
+                new LinkedBlockingDeque<>(4),
                 new ThreadPoolExecutor.AbortPolicy());
         return executor;
     }
     
 }
 
-class PersonList implements Runnable/*<List<Person>>*/ {
-
-//    @Override
-//    public List<Person> call() throws Exception {
-//        Thread.sleep(1000);
-//        System.out.println("=====>线程一PersonList线程开始执行");
-//        List<Person> personList = new ArrayList<>();
-//        Person p1 = new Person();
-//        p1.setAge(1);
-//        personList.add(p1);
-//        return personList;
-//    }
+class Person1 implements Callable<List<Person>> {
 
     @Override
-    public void run() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("=====>线程一PersonList线程开始执行");
+    public List<Person> call() throws Exception {
+        Thread.sleep(2000);
+        System.out.println(Thread.currentThread().getName() + "=====>线程一-PersonList线程开始执行");
+        List<Person> personList = new ArrayList<>();
+        Person p1 = new Person();
+        p1.setAge(1);
+        personList.add(p1);
+        return personList;
     }
 }
 
-class StudentList implements/* Callable<List<Student1>>*/ Runnable {
-
-//    @Override
-//    public List<Student1> call() throws Exception {
-//        Thread.sleep(1000);
-//        System.out.println("=====>线程二StudentList线程开始执行");
-//        List<Student1> student1s = new ArrayList<>();
-//        student1s.add(new Student1());
-//        return student1s;
-//    }
+class Person2 implements Callable<List<Person>> /*Runnable*/ {
 
     @Override
-    public void run() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("=====>线程二StudentList线程开始执行");
+    public List<Person> call() throws Exception {
+        Thread.sleep(2000);
+        System.out.println(Thread.currentThread().getName() + "=====>线程二-PersonList线程开始执行");
+        List<Person> personList = new ArrayList<>();
+        Person p1 = new Person();
+        p1.setAge(1);
+        personList.add(p1);
+        return personList;
+    }
+
+}
+
+class Person3 implements Callable<List<Person>>/*Runnable*/ {
+
+    @Override
+    public List<Person> call() throws Exception {
+        Thread.sleep(2000);
+        System.out.println(Thread.currentThread().getName() + "=====>线程三-PersonList线程开始执行");
+        List<Person> personList = new ArrayList<>();
+        Person p1 = new Person();
+        p1.setAge(1);
+        personList.add(p1);
+        return personList;
     }
 }
 
-class stuList implements /*Callable<List<Student2>>*/Runnable {
-
-//    @Override
-//    public List<Student2> call() throws Exception {
-//        Thread.sleep(1000);
-//        System.out.println("=====>线程三StudentList线程开始执行");
-//        
-//        return null;
-//    }
+class Person4 implements Callable<List<Person>>/*Runnable */{
 
     @Override
-    public void run() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("=====>线程三StudentList线程开始执行");
+    public List<Person> call() throws Exception {
+        Thread.sleep(2000);
+        System.out.println(Thread.currentThread().getName() + "=====>线程四-PersonList线程开始执行");
+        List<Person> personList = new ArrayList<>();
+        Person p1 = new Person();
+        p1.setAge(1);
+        personList.add(p1);
+        return personList;
     }
 }
 
-class Student implements /*Callable<Student3>*/Runnable {
-
-//    @Override
-//    public Student3 call() throws Exception {
-//        Thread.sleep(1000);
-//        System.out.println("=====>线程四Student线程开始执行");
-//        return null;
-//    }
+class Person5 implements Callable<List<Person>>/*Runnable */{
 
     @Override
-    public void run() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("=====>线程四Student线程开始执行");
+    public List<Person> call() throws Exception {
+        Thread.sleep(2000);
+        System.out.println(Thread.currentThread().getName() + "=====>线程五-PersonList线程开始执行");
+        List<Person> personList = new ArrayList<>();
+        Person p1 = new Person();
+        p1.setAge(1);
+        personList.add(p1);
+        return personList;
+    }
+}
+
+class Person6 implements Callable<List<Person>>/*Runnable */{
+
+    @Override
+    public List<Person> call() throws Exception {
+        Thread.sleep(2000);
+        System.out.println(Thread.currentThread().getName() + "=====>线程六-PersonList线程开始执行");
+        List<Person> personList = new ArrayList<>();
+        Person p1 = new Person();
+        p1.setAge(1);
+        personList.add(p1);
+        return personList;
     }
 }
